@@ -1,1 +1,176 @@
-the website is currently under renovation... check back later.
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Rohit K. Parida • UX Portfolio</title>
+</head>
+<body>
+    <div class="custom-cursor">
+        <div class="cursor-inner"></div>
+    </div>
+    <nav class="navbar">
+        <div class="brand-name"><a href="">☻ Hey there!</a></div>
+        <div class="brand-name"><a href="">0.9 gram</a></div>
+    </nav>
+    <nav class="navbar fixed">
+        <div class="navbar-links"><a href="">About</a><a href="">Work</a><a href="">Blog</a><a href="">Contact</a></div>
+    </nav>
+    <main>
+        <header class="greeting">
+            <div class="background"></div><span>Rohit K. Parida — UX Designer<br>based in India</span>
+        </header>
+        <section>
+            <span>● Selected work</span>
+            <div class="work-container">
+                <div class="work-item">
+                    <div class="work-title">Bubble: Offline Social</div>
+                    <div class="work-category">Usability Testing</div>
+                    <div class="work-description">Offline social media platform fostering meaningful connections.</div>
+                </div>
+                <div class="work-item">
+                    <div class="work-title">E-commerce Website</div>
+                    <div class="work-category">Usability Testing</div>
+                    <div class="work-description">Offline social media platform fostering meaningful connections.</div>
+                </div>
+                <div class="work-item">
+                    <div class="work-title">Dashboard</div>
+                    <div class="work-category">Usability Testing</div>
+                    <div class="work-description">Offline social media platform fostering meaningful connections.</div>
+                </div>
+                <div class="work-item">
+                    <div class="work-title">Daily UI</div>
+                    <div class="work-category">Usability Testing</div>
+                    <div class="work-description">Offline social media platform fostering meaningful connections.</div>
+                </div>
+                <div class="work-item">
+                    <div class="work-title">Design Portfolio</div>
+                    <div class="work-category">Usability Testing</div>
+                    <div class="work-description">Offline social media platform fostering meaningful connections.</div>
+                </div>
+                <div class="work-item">
+                    <div class="work-title">More on Behance</div>
+                    <div class="work-category">Usability Testing</div>
+                    <div class="work-description">Offline social media platform fostering meaningful connections.</div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>© Rohit K. Parida 2023 &nbsp; • &nbsp; Design + Code = Magic ✨ &nbsp; • &nbsp; <span id="time"></span></footer>
+    <svg hidden>
+        <filter id='grain'>
+            <feTurbulence type='fractalNoise' baseFrequency='.7' stitchTiles='stitch' />
+        </filter>
+    </svg>
+</body>
+
+
+<script>
+    let currentScrollY = targetScrollY = 0,
+        ticking = false;
+    const inertiaFactor = 0.2,
+        scrollSpeed = 1.4;
+    const updateCurrentScrollY = () => {
+        currentScrollY = window.scrollY;
+    };
+    // Function to set currentScrollY on initial load or reload
+    const initializeScrollY = () => {
+        updateCurrentScrollY();
+        window.removeEventListener('scroll', initializeScrollY);
+    };
+    // Event listener to trigger the initializeScrollY function
+    window.addEventListener('scroll', initializeScrollY, {
+        once: true
+    });
+    window.addEventListener('scroll', updateCurrentScrollY);
+    const onWheel = (e) => {
+        e.preventDefault();
+        // Clear the targetScrollY to stop inertia when using scrollbars
+        targetScrollY = 0;
+        !ticking && requestAnimationFrame(updateScroll);
+        ticking = true;
+        targetScrollY = Math.max(currentScrollY + e.deltaY * scrollSpeed, 0);
+        targetScrollY = Math.min(targetScrollY, document.documentElement.scrollHeight - window.innerHeight);
+    };
+    const updateScroll = () => {
+        currentScrollY += (targetScrollY - currentScrollY) * inertiaFactor;
+        window.scroll(0, currentScrollY);
+        if (Math.abs(targetScrollY - currentScrollY) < 0.1) {
+            currentScrollY = targetScrollY;
+            ticking = false;
+        } else {
+            requestAnimationFrame(updateScroll);
+        }
+    };
+    window.addEventListener('wheel', onWheel, {
+        passive: false
+    });
+
+ const cursor = document.querySelector('.custom-cursor');
+const cursorInner = cursor.querySelector('.cursor-inner');
+let mouseX = 0;
+let mouseY = 0;
+let cursorX = 0;
+let cursorY = 0;
+const speed = 0.2;
+
+function animateCursor() {
+    const distX = mouseX - cursorX;
+    const distY = mouseY - cursorY;
+    cursorX += distX * speed;
+    cursorY += distY * speed;
+    cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) scale(1)`;
+
+    // Update background position based on cursor coordinates
+    // const radialGradientX = cursorX + window.innerWidth / 2;
+    // const radialGradientY = cursorY + window.innerHeight / 2;
+    // document.body.style.backgroundPosition = `${radialGradientX}px ${radialGradientY}px`;
+
+    requestAnimationFrame(animateCursor);
+}
+
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
+
+animateCursor();
+
+
+    // Add cursor scaling up effect on hover for clickable elements
+    const cursorScaleUp = () => cursorInner.style.transform = 'translate(-50%,-50%) scale(3)';
+    const cursorReset = () => cursorInner.style.transform = 'translate(-50%,-50%) scale(1)';
+
+    document.querySelectorAll('a, button, [role="button"], [role="link"]').forEach(element => {
+        element.addEventListener('mouseenter', cursorScaleUp);
+        element.addEventListener('mouseleave', cursorReset);
+    });
+
+    // Hide and show the custom cursor when the actual OS cursor leaves or re-enters the viewport
+    const cursorHideShow = (scale) => {
+        // cursor.style.opacity = opacity;
+        cursorInner.style.transform = `translate(-50%,-50%)scale(${scale})`;
+    };
+
+    document.addEventListener('mouseleave', () => cursorHideShow('0'));
+    document.addEventListener('mouseenter', () => cursorHideShow('1'));
+
+    function updateTime() {
+        // desired timezone identifier
+        const timeZone = 'Asia/Kolkata';
+        const options = { timeZone: timeZone, hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        const timeString = new Date().toLocaleTimeString('en-US', options);
+        
+        document.getElementById('time').textContent = `It is ${timeString} in India`;
+    }
+
+    // Update the time every second
+    setInterval(updateTime, 1000);
+
+    // Initial update
+    updateTime();
+</script>
+
+</html>
